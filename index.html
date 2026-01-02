@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqoon Maal - Test Your Skills</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <!-- HEADER WITH BUTTONS -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo" onclick="goHome()">Aqoon <span>Maal</span></div>
+                <div class="nav-links" id="navLinks">
+                    <a href="#home">Home</a>
+                    <a href="#subjects">Subjects</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#contact">Contact</a>
+                    <div class="auth-buttons">
+                        <button class="btn btn-outline" onclick="showSignIn()">Sign In</button>
+                        <button class="btn" onclick="showSignUp()">Sign Up</button>
+                    </div>
+                </div>
+                <button class="btn" style="display:none" id="mobileMenu">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="container" style="display:flex; align-items:center;">
+            <div class="hero-content">
+                <h1>Test Your Skills Through Quizzes</h1>
+                <p>You're gonna be great with this website. It makes it easy to develop your skills with interactive quizzes.</p>
+                <button class="btn" onclick="scrollToSubjects()">Start Learning</button>
+            </div>
+            <div class="hero-image">
+                <!-- Hero image placeholder - in practice, add actual image -->
+                <div style="width:400px; height:300px; background:linear-gradient(45deg, var(--mustard), var(--teal-light)); border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.5rem;">
+                    🧠 Learn & Grow
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ RESTRICTION MESSAGE -->
+    <div class="container">
+        <div class="quiz-restriction" id="quizRestriction">
+            ⚠️ Please Sign In to take quizzes. <button class="btn" onclick="showSignIn()" style="margin-left:10px; padding:5px 15px;">Sign In</button>
+        </div>
+    </div>
+
+    <!-- SUBJECTS SECTION -->
+    <section class="subjects" id="subjects">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Subjects</h2>
+                <p>Choose from 9 subjects to test and improve your knowledge</p>
+            </div>
+            <div class="subjects-grid" id="subjectsGrid">
+                <!-- Subjects loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ SECTION -->
+    <section class="quiz-section" id="quizSection">
+        <div class="container">
+            <div class="quiz-box">
+                <div class="quiz-header">
+                    <h2 class="quiz-title" id="quizTitle">Quiz</h2>
+                    <div class="progress">
+                        <span id="currentQ">1</span>/<span id="totalQ">10</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="question-box">
+                    <div class="question-number">Question <span id="qNumber">1</span></div>
+                    <div class="question-text" id="questionText">Loading question...</div>
+                    <div class="options" id="optionsContainer">
+                        <!-- Options loaded by JavaScript -->
+                    </div>
+                </div>
+                <div class="quiz-buttons">
+                    <button class="btn btn-outline" id="prevBtn">Previous</button>
+                    <button class="btn" id="nextBtn">Next Question</button>
+                    <button class="btn" id="submitBtn" style="display:none">Submit Quiz</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESULTS SECTION -->
+    <section class="results-section" id="resultsSection">
+        <div class="container">
+            <div class="results-box">
+                <h2 style="color:var(--teal-dark); margin-bottom:30px;">Quiz Results</h2>
+                <div class="score-circle" id="scoreCircle">
+                    <div class="score-inner" id="scoreInner">0%</div>
+                </div>
+                <h3 id="scoreText" style="font-size:2rem; color:var(--teal-dark); margin:20px 0;">0/10</h3>
+                <p id="resultMessage" style="font-size:1.2rem; color:var(--text-gray); margin-bottom:30px;">
+                    Your result message will appear here
+                </p>
+                <div class="results-buttons">
+                    <button class="btn btn-outline" onclick="retakeQuiz()">Retake Quiz</button>
+                    <button class="btn" onclick="goToSubjects()">Back to Subjects</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color:var(--teal-dark);">What Our Students Say</h2>
+                <p>Real stories from our successful learners</p>
+            </div>
+            <div class="testimonials-grid" id="testimonialsGrid">
+                <!-- Testimonials loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color:var(--teal-dark);">Contact Us</h2>
+                <p>Ready to challenge yourself? Get in touch with us</p>
+            </div>
+            <div class="contact-form">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="contactName" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label>Your Email</label>
+                    <input type="email" id="contactEmail" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>Your Message</label>
+                    <textarea id="contactMessage" placeholder="Tell us what you need"></textarea>
+                </div>
+                <button class="btn" onclick="submitContact()" style="width:100%;">Send Message</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">Aqoon <span>Maal</span></div>
+                    <p style="margin-bottom:20px; opacity:0.8;">Ready to challenge yourself? Contact us for support.</p>
+                    <p style="opacity:0.8;">📧 Email: support@aqoommaal.com</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#subjects">Subjects</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2025 Aqoon Maal Quizlet Platform. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- SIMPLE MODALS FOR SIGN IN/UP -->
+    <div id="authModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+        <div style="background:white; padding:40px; border-radius:10px; max-width:400px; width:90%;">
+            <h2 style="color:var(--teal-dark); margin-bottom:20px;" id="modalTitle">Sign In</h2>
+            <div style="margin-bottom:20px;">
+                <input type="email" id="authEmail" placeholder="Email" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:5px;">
+                <input type="password" id="authPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #ddd; border-radius:5px;">
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn" onclick="handleAuth()" style="flex:1;">Submit</button>
+                <button class="btn btn-outline" onclick="closeModal()" style="flex:1;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== SIMPLE APP STATE ====================
+        let user = null; // null = not logged in, object = logged in user
+        let currentQuiz = null;
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizScore = 0;
+
+        // ==================== QUIZ DATA ====================
+        const quizzes = {
+            js: {
+                title: "JavaScript",
+                questions: [
+                    { q: "What does 'typeof' return for an array?", options: ["object", "array", "string"], answer: 0 },
+                    { q: "Which method adds item to array end?", options: ["push()", "pop()", "unshift()"], answer: 0 },
+                    { q: "What is 2 + '2' in JS?", options: ["4", "22", "Error"], answer: 1 }
+                ]
+            },
+            python: {
+                title: "Python",
+                questions: [
+                    { q: "Python comments start with?", options: ["//", "#", "/*"], answer: 1 },
+                    { q: "What is 2 ** 3?", options: ["6", "8", "9"], answer: 1 },
+                    { q: "Immutable data type?", options: ["list", "dict", "tuple"], answer: 2 }
+                ]
+            },
+            react: {
+                title: "React",
+                questions: [
+                    { q: "React is a...", options: ["Language", "JS Library", "Database"], answer: 1 },
+                    { q: "Create React App command?", options: ["create-react-app", "react-new", "npm react"], answer: 0 },
+                    { q: "JSX is...", options: ["New language", "JS extension", "CSS tool"], answer: 1 }
+                ]
+            }
+        };
+
+        // ==================== INITIALIZE APP ====================
+        function init() {
+            loadSubjects();
+            loadTestimonials();
+            setupEventListeners();
+        }
+
+        // ==================== LOAD SUBJECTS ====================
+        function loadSubjects() {
+            const subjects = [
+                { id: "js", name: "JavaScript", desc: "Master the world's most popular language" },
+                { id: "python", name: "Python", desc: "Take your logic to the next level" },
+                { id: "react", name: "React", desc: "Take your website into another level" },
+                { id: "css", name: "CSS", desc: "Design beautiful layouts and animations" },
+                { id: "php", name: "PHP", desc: "Learn server-side web development" },
+                { id: "ai", name: "AI", desc: "Test your knowledge of AI" },
+                { id: "html", name: "HTML", desc: "The backbone of every website" },
+                { id: "sql", name: "SQL", desc: "Manage and query databases like a pro" },
+                { id: "excel", name: "Excel", desc: "The master of analysing" }
+            ];
+
+            const grid = document.getElementById("subjectsGrid");
+            grid.innerHTML = "";
+
+            subjects.forEach(subject => {
+                const card = document.createElement("div");
+                card.className = "subject-card";
+                card.innerHTML = `
+                    <h3>${subject.name}</h3>
+                    <p>${subject.desc}</p>
+                    <button class="btn" onclick="startQuiz('${subject.id}')">Start Quiz</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ==================== LOAD TESTIMONIALS ====================
+        function loadTestimonials() {
+            const testimonials = [
+                {
+                    text: "The quizzes on Aqoon Maal quizlet helped me land my first job as a developer. The immediate feedback is a game changer!",
+                    name: "Mohammed Ali Ahmed",
+                    initial: "M"
+                },
+                {
+                    text: "As a beginner, these quizzes boosted my confidence. The variety of subjects is amazing!",
+                    name: "Sarah Johnson",
+                    initial: "S"
+                },
+                {
+                    text: "Perfect for interview preparation. The questions are relevant and challenging.",
+                    name: "David Chen",
+                    initial: "D"
+                }
+            ];
+
+            const grid = document.getElementById("testimonialsGrid");
+            grid.innerHTML = "";
+
+            testimonials.forEach(testimonial => {
+                const card = document.createElement("div");
+                card.className = "testimonial-card";
+                card.innerHTML = `
+                    <div class="testimonial-text">${testimonial.text}</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">${testimonial.initial}</div>
+                        <div class="author-info">
+                            <h4>${testimonial.name}</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ==================== AUTHENTICATION ====================
+        function showSignIn() {
+            document.getElementById("modalTitle").textContent = "Sign In";
+            document.getElementById("authModal").style.display = "flex";
+        }
+
+        function showSignUp() {
+            document.getElementById("modalTitle").textContent = "Sign Up";
+            document.getElementById("authModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("authModal").style.display = "none";
+        }
+
+        function handleAuth() {
+            const email = document.getElementById("authEmail").value;
+            const password = document.getElementById("authPassword").value;
+            
+            if (email && password) {
+                user = { email: email, name: email.split('@')[0] };
+                closeModal();
+                document.getElementById("quizRestriction").style.display = "none";
+                alert("Welcome " + user.name + "! You can now take quizzes.");
+            } else {
+                alert("Please enter email and password");
+            }
+        }
+
+        // ==================== QUIZ FUNCTIONS ====================
+        function startQuiz(quizId) {
+            // Check if user is logged in
+            if (!user) {
+                document.getElementById("quizRestriction").style.display = "block";
+                return;
+            }
+
+            // Hide restriction message
+            document.getElementById("quizRestriction").style.display = "none";
+
+            // If quiz doesn't exist, use JavaScript quiz
+            if (!quizzes[quizId]) quizId = "js";
+
+            currentQuiz = quizId;
+            currentQuestion = 0;
+            userAnswers = new Array(quizzes[quizId].questions.length).fill(null);
+
+            // Show quiz section
+            document.getElementById("subjects").style.display = "none";
+            document.getElementById("quizSection").style.display = "block";
+            document.getElementById("resultsSection").style.display = "none";
+
+            // Load first question
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const quiz = quizzes[currentQuiz];
+            const question = quiz.questions[currentQuestion];
+
+            // Update UI
+            document.getElementById("quizTitle").textContent = quiz.title + " Quiz";
+            document.getElementById("currentQ").textContent = currentQuestion + 1;
+            document.getElementById("totalQ").textContent = quiz.questions.length;
+            document.getElementById("qNumber").textContent = currentQuestion + 1;
+            document.getElementById("questionText").textContent = question.q;
+
+            // Progress bar
+            const progress = ((currentQuestion + 1) / quiz.questions.length) * 100;
+            document.getElementById("progressFill").style.width = progress + "%";
+
+            // Load options
+            const optionsContainer = document.getElementById("optionsContainer");
+            optionsContainer.innerHTML = "";
+
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement("div");
+                optionDiv.className = "option";
+                if (userAnswers[currentQuestion] === index) optionDiv.classList.add("selected");
+                optionDiv.textContent = option;
+                optionDiv.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            // Update buttons
+            document.getElementById("prevBtn").style.display = currentQuestion > 0 ? "block" : "none";
+            document.getElementById("nextBtn").style.display = currentQuestion < quiz.questions.length - 1 ? "block" : "none";
+            document.getElementById("submitBtn").style.display = currentQuestion === quiz.questions.length - 1 ? "block" : "none";
+        }
+
+        function selectOption(optionIndex) {
+            // Remove selection from all options
+            document.querySelectorAll(".option").forEach(opt => opt.classList.remove("selected"));
+            
+            // Add selection to clicked option
+            event.target.classList.add("selected");
+            
+            // Save answer
+            userAnswers[currentQuestion] = optionIndex;
+        }
+
+        // ==================== QUIZ NAVIGATION ====================
+        document.getElementById("nextBtn").onclick = function() {
+            if (currentQuestion < quizzes[currentQuiz].questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            }
+        };
+
+        document.getElementById("prevBtn").onclick = function() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        };
+
+        document.getElementById("submitBtn").onclick = function() {
+            calculateScore();
+            showResults();
+        };
+
+        // ==================== SCORE & RESULTS ====================
+        function calculateScore() {
+            const quiz = quizzes[currentQuiz];
+            let correct = 0;
+
+            quiz.questions.forEach((question, index) => {
+                if (userAnswers[index] === question.answer) {
+                    correct++;
+                }
+            });
+
+            quizScore = correct;
+        }
+
+        function showResults() {
+            const quiz = quizzes[currentQuiz];
+            const total = quiz.questions.length;
+            const percentage = Math.round((quizScore / total) * 100);
+
+            // Update results UI
+            document.getElementById("scoreInner").textContent = percentage + "%";
+            document.getElementById("scoreText").textContent = quizScore + "/" + total;
+
+            // Update score circle
+            const circle = document.getElementById("scoreCircle");
+            circle.style.background = `conic-gradient(var(--mustard) 0% ${percentage}%, var(--light-gray) ${percentage}% 100%)`;
+
+            // Result message
+            let message = "";
+            if (percentage >= 80) message = "Excellent! You mastered this subject.";
+            else if (percentage >= 60) message = "Good job! You know the basics well.";
+            else message = "Keep practicing! Review the material and try again.";
+
+            document.getElementById("resultMessage").textContent = message;
+
+            // Show results section
+            document.getElementById("quizSection").style.display = "none";
+            document.getElementById("resultsSection").style.display = "block";
+        }
+
+        function retakeQuiz() {
+            startQuiz(currentQuiz);
+        }
+
+        // ==================== NAVIGATION ====================
+        function goHome() {
+            document.getElementById("subjects").style.display = "block";
+            document.getElementById("quizSection").style.display = "none";
+            document.getElementById("resultsSection").style.display = "none";
+            document.getElementById("quizRestriction").style.display = "none";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goToSubjects() {
+            document.getElementById("subjects").style.display = "block";
+            document.getElementById("quizSection").style.display = "none";
+            document.getElementById("resultsSection").style.display = "none";
+            document.getElementById("subjects").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToSubjects() {
+            document.getElementById("subjects").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ==================== CONTACT FORM ====================
+        function submitContact() {
+            const name = document.getElementById("contactName").value;
+            const email = document.getElementById("contactEmail").value;
+            const message = document.getElementById("contactMessage").value;
+
+            if (name && email && message) {
+                alert("Thank you " + name + "! Your message has been sent.");
+                document.getElementById("contactName").value = "";
+                document.getElementById("contactEmail").value = "";
+                document.getElementById("contactMessage").value = "";
+            } else {
+                alert("Please fill all fields");
+            }
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        function setupEventListeners() {
+            // Mobile menu toggle
+            const mobileBtn = document.getElementById("mobileMenu");
+            if (mobileBtn) {
+                mobileBtn.onclick = function() {
+                    document.getElementById("navLinks").classList.toggle("active");
+                };
+            }
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.onclick = function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute("href");
+                    document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Close mobile menu if open
+                    document.getElementById("navLinks").classList.remove("active");
+                };
+            });
+        }
+
+        // ==================== START APP ====================
+        window.onload = init;
+    </script>
+</body>
+</html>
