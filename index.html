@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aqoon Maal - Test Your Skills</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Roboto Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
 </head>
 <body>
@@ -14,13 +17,17 @@
             <nav>
                 <div class="logo" onclick="goHome()">Aqoon <span>Maal</span></div>
                 <div class="nav-links" id="navLinks">
-                    <a href="#home">Home</a>
-                    <a href="#subjects">Subjects</a>
-                    <a href="#testimonials">Testimonials</a>
-                    <a href="#contact">Contact</a>
-                    <div class="auth-buttons">
+                    <a href="#home" onclick="showHome()">Home</a>
+                    <a href="#subjects" onclick="showSubjects()">Subjects</a>
+                    <a href="#testimonials" onclick="showTestimonials()">Testimonials</a>
+                    <a href="#contact" onclick="showContact()">Contact</a>
+                    <div class="auth-buttons" id="authButtons">
                         <button class="btn btn-outline" onclick="showSignIn()">Sign In</button>
                         <button class="btn" onclick="showSignUp()">Sign Up</button>
+                    </div>
+                    <div class="user-info" id="userInfo" style="display:none;">
+                        <span id="userName"></span>
+                        <button class="btn btn-danger" onclick="logout()" style="padding: 5px 15px;">Logout</button>
                     </div>
                 </div>
                 <button class="btn" style="display:none" id="mobileMenu">☰</button>
@@ -37,10 +44,7 @@
                 <button class="btn" onclick="scrollToSubjects()">Start Learning</button>
             </div>
             <div class="hero-image">
-                <!-- Hero image placeholder - in practice, add actual image -->
-                <div style="width:400px; height:300px; background:linear-gradient(45deg, var(--mustard), var(--teal-light)); border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.5rem;">
-                    🧠 Learn & Grow
-                </div>
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Learning illustration">
             </div>
         </div>
     </section>
@@ -53,7 +57,7 @@
     </div>
 
     <!-- SUBJECTS SECTION -->
-    <section class="subjects" id="subjects">
+    <section class="subjects page-section" id="subjects">
         <div class="container">
             <div class="section-title">
                 <h2>Our Subjects</h2>
@@ -69,6 +73,9 @@
     <section class="quiz-section" id="quizSection">
         <div class="container">
             <div class="quiz-box">
+                <div class="quiz-timer" id="quizTimer">
+                    ⏰ Time Remaining: <span id="timerDisplay">02:00</span>
+                </div>
                 <div class="quiz-header">
                     <h2 class="quiz-title" id="quizTitle">Quiz</h2>
                     <div class="progress">
@@ -86,6 +93,7 @@
                     </div>
                 </div>
                 <div class="quiz-buttons">
+                    <button class="btn btn-danger" id="cancelBtn">Cancel Quiz</button>
                     <button class="btn btn-outline" id="prevBtn">Previous</button>
                     <button class="btn" id="nextBtn">Next Question</button>
                     <button class="btn" id="submitBtn" style="display:none">Submit Quiz</button>
@@ -107,7 +115,25 @@
                     Your result message will appear here
                 </p>
                 <div class="results-buttons">
-                    <button class="btn btn-outline" onclick="retakeQuiz()">Retake Quiz</button>
+                    <button class="btn btn-outline" onclick="reviewAnswers()">Review Answers</button>
+                    <button class="btn" onclick="goToSubjects()">Back to Subjects</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEW SECTION -->
+    <section class="review-section" id="reviewSection">
+        <div class="container">
+            <div class="review-box">
+                <h2 style="color:var(--teal-dark); margin-bottom:30px; text-align:center;">Quiz Review</h2>
+                <p style="text-align:center; margin-bottom:30px; color:var(--text-gray);">
+                    Review your answers and see what you got right and wrong
+                </p>
+                <div id="reviewContainer">
+                    <!-- Review questions loaded by JavaScript -->
+                </div>
+                <div style="text-align:center; margin-top:40px;">
                     <button class="btn" onclick="goToSubjects()">Back to Subjects</button>
                 </div>
             </div>
@@ -115,7 +141,7 @@
     </section>
 
     <!-- TESTIMONIALS -->
-    <section class="testimonials" id="testimonials">
+    <section class="testimonials page-section" id="testimonials">
         <div class="container">
             <div class="section-title">
                 <h2 style="color:var(--teal-dark);">What Our Students Say</h2>
@@ -128,7 +154,7 @@
     </section>
 
     <!-- CONTACT FORM -->
-    <section class="contact" id="contact">
+    <section class="contact page-section" id="contact">
         <div class="container">
             <div class="section-title">
                 <h2 style="color:var(--teal-dark);">Contact Us</h2>
@@ -153,7 +179,7 @@
     </section>
 
     <!-- FOOTER -->
-    <footer>
+    <footer class="page-section">
         <div class="container">
             <div class="footer-content">
                 <div>
@@ -164,10 +190,10 @@
                 <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#subjects">Subjects</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#home" onclick="showHome()">Home</a></li>
+                        <li><a href="#subjects" onclick="showSubjects()">Subjects</a></li>
+                        <li><a href="#testimonials" onclick="showTestimonials()">Testimonials</a></li>
+                        <li><a href="#contact" onclick="showContact()">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
@@ -185,28 +211,34 @@
         </div>
     </footer>
 
-    <!-- SIMPLE MODALS FOR SIGN IN/UP -->
+    <!-- AUTH MODAL -->
     <div id="authModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
         <div style="background:white; padding:40px; border-radius:10px; max-width:400px; width:90%;">
             <h2 style="color:var(--teal-dark); margin-bottom:20px;" id="modalTitle">Sign In</h2>
-            <div style="margin-bottom:20px;">
-                <input type="email" id="authEmail" placeholder="Email" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:5px;">
-                <input type="password" id="authPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #ddd; border-radius:5px;">
+            <div id="alertMessage" class="alert" style="display:none;"></div>
+            <div style="margin-bottom:20px;" id="authForm">
+                <!-- Sign In/Up form will be loaded here -->
             </div>
             <div style="display:flex; gap:10px;">
-                <button class="btn" onclick="handleAuth()" style="flex:1;">Submit</button>
+                <button class="btn" onclick="handleAuth()" style="flex:1;" id="authSubmitBtn">Submit</button>
                 <button class="btn btn-outline" onclick="closeModal()" style="flex:1;">Cancel</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ==================== SIMPLE APP STATE ====================
-        let user = null; // null = not logged in, object = logged in user
+        // ==================== APP STATE ====================
+        let user = null;
         let currentQuiz = null;
         let currentQuestion = 0;
         let userAnswers = [];
         let quizScore = 0;
+        let quizTimer = null;
+        let timeLeft = 120; // 2 minutes in seconds
+        let userProgress = {};
+
+        // ==================== REGISTERED USERS DATABASE ====================
+        let registeredUsers = [];
 
         // ==================== QUIZ DATA ====================
         const quizzes = {
@@ -215,7 +247,9 @@
                 questions: [
                     { q: "What does 'typeof' return for an array?", options: ["object", "array", "string"], answer: 0 },
                     { q: "Which method adds item to array end?", options: ["push()", "pop()", "unshift()"], answer: 0 },
-                    { q: "What is 2 + '2' in JS?", options: ["4", "22", "Error"], answer: 1 }
+                    { q: "What is 2 + '2' in JS?", options: ["4", "22", "Error"], answer: 1 },
+                    { q: "Which keyword declares a variable in JavaScript?", options: ["var", "let", "both var and let"], answer: 2 },
+                    { q: "What is the output of: console.log(typeof null)?", options: ["object", "null", "undefined"], answer: 0 }
                 ]
             },
             python: {
@@ -223,7 +257,9 @@
                 questions: [
                     { q: "Python comments start with?", options: ["//", "#", "/*"], answer: 1 },
                     { q: "What is 2 ** 3?", options: ["6", "8", "9"], answer: 1 },
-                    { q: "Immutable data type?", options: ["list", "dict", "tuple"], answer: 2 }
+                    { q: "Immutable data type?", options: ["list", "dict", "tuple"], answer: 2 },
+                    { q: "Which function converts a string to integer?", options: ["str()", "int()", "float()"], answer: 1 },
+                    { q: "What does len([1,2,3]) return?", options: ["3", "4", "Error"], answer: 0 }
                 ]
             },
             react: {
@@ -231,16 +267,154 @@
                 questions: [
                     { q: "React is a...", options: ["Language", "JS Library", "Database"], answer: 1 },
                     { q: "Create React App command?", options: ["create-react-app", "react-new", "npm react"], answer: 0 },
-                    { q: "JSX is...", options: ["New language", "JS extension", "CSS tool"], answer: 1 }
+                    { q: "JSX is...", options: ["New language", "JS extension", "CSS tool"], answer: 1 },
+                    { q: "Which lifecycle method is called first?", options: ["componentDidMount", "render", "constructor"], answer: 2 },
+                    { q: "What is used to pass data to components?", options: ["state", "props", "context"], answer: 1 }
+                ]
+            },
+            css: {
+                title: "CSS",
+                questions: [
+                    { q: "What does CSS stand for?", options: ["Computer Style Sheets", "Creative Style System", "Cascading Style Sheets"], answer: 2 },
+                    { q: "Which property changes text color?", options: ["text-color", "color", "font-color"], answer: 1 },
+                    { q: "How to make text bold?", options: ["font-weight: bold", "text-style: bold", "font: bold"], answer: 0 }
+                ]
+            },
+            html: {
+                title: "HTML",
+                questions: [
+                    { q: "What does HTML stand for?", options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyper Transfer Markup Language"], answer: 0 },
+                    { q: "Which tag creates a hyperlink?", options: ["<link>", "<a>", "<href>"], answer: 1 },
+                    { q: "What is the root element of HTML?", options: ["<body>", "<html>", "<head>"], answer: 1 }
+                ]
+            },
+            sql: {
+                title: "SQL",
+                questions: [
+                    { q: "What does SQL stand for?", options: ["Structured Query Language", "Simple Query Language", "Standard Query Language"], answer: 0 },
+                    { q: "Which clause filters rows?", options: ["WHERE", "HAVING", "FILTER"], answer: 0 },
+                    { q: "Which statement retrieves data?", options: ["GET", "SELECT", "RETRIEVE"], answer: 1 }
+                ]
+            },
+            php: {
+                title: "PHP",
+                questions: [
+                    { q: "What does PHP stand for?", options: ["Personal Home Page", "PHP: Hypertext Preprocessor", "Both"], answer: 2 },
+                    { q: "PHP variables start with?", options: ["&", "$", "#"], answer: 1 },
+                    { q: "Which function outputs text?", options: ["print()", "echo()", "Both"], answer: 2 }
+                ]
+            },
+            ai: {
+                title: "AI",
+                questions: [
+                    { q: "What does AI stand for?", options: ["Automated Intelligence", "Artificial Intelligence", "Advanced Interface"], answer: 1 },
+                    { q: "Which is a machine learning library?", options: ["TensorFlow", "React", "Django"], answer: 0 },
+                    { q: "What is supervised learning?", options: ["Learning with labels", "Learning without guidance", "Self-learning"], answer: 0 }
+                ]
+            },
+            excel: {
+                title: "Excel",
+                questions: [
+                    { q: "What does VLOOKUP do?", options: ["Looks up values vertically", "Creates charts", "Formats cells"], answer: 0 },
+                    { q: "Which key combination saves?", options: ["Ctrl+S", "Ctrl+C", "Ctrl+V"], answer: 0 },
+                    { q: "What is a spreadsheet grid called?", options: ["Table", "Worksheet", "Grid"], answer: 1 }
                 ]
             }
         };
 
         // ==================== INITIALIZE APP ====================
         function init() {
+            loadDataFromLocalStorage();
             loadSubjects();
             loadTestimonials();
             setupEventListeners();
+            checkLoginStatus();
+        }
+
+        // ==================== LOAD DATA FROM LOCALSTORAGE ====================
+        function loadDataFromLocalStorage() {
+            // Load registered users
+            const savedUsers = localStorage.getItem('registeredUsers');
+            if (savedUsers) {
+                registeredUsers = JSON.parse(savedUsers);
+            } else {
+                // Initialize with some default users
+                registeredUsers = [
+                    { email: "student@aqoonmaal.com", password: "password123", name: "Test Student" },
+                    { email: "john@example.com", password: "john123", name: "John Doe" },
+                    { email: "sara@example.com", password: "sara123", name: "Sara Johnson" }
+                ];
+                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+            }
+
+            // Load user progress
+            const savedProgress = localStorage.getItem('userProgress');
+            if (savedProgress) {
+                userProgress = JSON.parse(savedProgress);
+            }
+        }
+
+        // ==================== CHECK LOGIN STATUS ====================
+        function checkLoginStatus() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                user = JSON.parse(savedUser);
+                updateAuthUI();
+            }
+        }
+
+        // ==================== UPDATE AUTH UI ====================
+        function updateAuthUI() {
+            const authButtons = document.getElementById('authButtons');
+            const userInfo = document.getElementById('userInfo');
+            
+            if (user) {
+                authButtons.style.display = 'none';
+                userInfo.style.display = 'flex';
+                document.getElementById('userName').textContent = user.name;
+            } else {
+                authButtons.style.display = 'flex';
+                userInfo.style.display = 'none';
+            }
+        }
+
+        // ==================== NAVIGATION FUNCTIONS ====================
+        function showHome() {
+            hideAllSections();
+            document.getElementById('home').style.display = 'flex';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showSubjects() {
+            hideAllSections();
+            document.getElementById('subjects').style.display = 'block';
+            document.getElementById('subjects').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showTestimonials() {
+            hideAllSections();
+            document.getElementById('testimonials').style.display = 'block';
+            document.getElementById('testimonials').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showContact() {
+            hideAllSections();
+            document.getElementById('contact').style.display = 'block';
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideAllSections() {
+            // Hide all page sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            // Also hide quiz sections
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('reviewSection').style.display = 'none';
+            
+            // Remove quiz-active class
+            document.body.classList.remove('quiz-active');
         }
 
         // ==================== LOAD SUBJECTS ====================
@@ -261,12 +435,33 @@
             grid.innerHTML = "";
 
             subjects.forEach(subject => {
+                const userId = user ? user.email : '';
+                const userProgressKey = userId ? userId : 'guest';
+                
+                // Check if subject has been attempted before (even if not completed)
+                const hasAttempted = userProgress[userProgressKey] && 
+                                   userProgress[userProgressKey][subject.id] && 
+                                   userProgress[userProgressKey][subject.id].attempts > 0;
+                
+                const isCompleted = userProgress[userProgressKey] ? 
+                                   (userProgress[userProgressKey][subject.id] ? userProgress[userProgressKey][subject.id].completed : false) : false;
+                
+                const highestScore = userProgress[userProgressKey] ? 
+                                    (userProgress[userProgressKey][subject.id] ? userProgress[userProgressKey][subject.id].score : 0) : 0;
+                
                 const card = document.createElement("div");
                 card.className = "subject-card";
                 card.innerHTML = `
+                    ${isCompleted ? `<div class="subject-status status-completed">Completed</div>` : 
+                      hasAttempted ? `<div class="subject-status" style="background:var(--warning-orange); color:white;">Taken Before</div>` : 
+                      `<div class="subject-status status-incomplete">New</div>`}
                     <h3>${subject.name}</h3>
                     <p>${subject.desc}</p>
-                    <button class="btn" onclick="startQuiz('${subject.id}')">Start Quiz</button>
+                    ${highestScore > 0 ? `<p style="color:var(--success-green); font-weight:bold;">Best Score: ${highestScore}%</p>` : ''}
+                    <button class="btn ${isCompleted ? 'btn-success' : hasAttempted ? 'btn-warning' : ''}" 
+                            onclick="startQuiz('${subject.id}')">
+                        ${hasAttempted ? 'Retake Quiz' : 'Start Quiz'}
+                    </button>
                 `;
                 grid.appendChild(card);
             });
@@ -316,29 +511,200 @@
         function showSignIn() {
             document.getElementById("modalTitle").textContent = "Sign In";
             document.getElementById("authModal").style.display = "flex";
+            document.getElementById("alertMessage").style.display = "none";
+            
+            // Load sign in form
+            document.getElementById("authForm").innerHTML = `
+                <input type="email" id="authEmail" placeholder="Email" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:5px;">
+                <input type="password" id="authPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #ddd; border-radius:5px;">
+            `;
         }
 
         function showSignUp() {
             document.getElementById("modalTitle").textContent = "Sign Up";
             document.getElementById("authModal").style.display = "flex";
+            document.getElementById("alertMessage").style.display = "none";
+            
+            // Load sign up form with password confirmation
+            document.getElementById("authForm").innerHTML = `
+                <input type="text" id="authName" placeholder="Full Name" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:5px;">
+                <input type="email" id="authEmail" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:5px;">
+                <input type="password" id="authPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:5px;">
+                <input type="password" id="authConfirmPassword" placeholder="Confirm Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:5px;">
+                <p style="font-size:0.8rem; color:#666; margin-bottom:10px;">Password must be at least 6 characters long</p>
+            `;
         }
 
         function closeModal() {
             document.getElementById("authModal").style.display = "none";
+            document.getElementById("authEmail").value = "";
+            document.getElementById("authPassword").value = "";
+            const confirmPass = document.getElementById("authConfirmPassword");
+            if (confirmPass) confirmPass.value = "";
+            const authName = document.getElementById("authName");
+            if (authName) authName.value = "";
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById("alertMessage");
+            alertDiv.textContent = message;
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.style.display = "block";
         }
 
         function handleAuth() {
-            const email = document.getElementById("authEmail").value;
+            const isSignUp = document.getElementById("modalTitle").textContent === "Sign Up";
+            
+            if (isSignUp) {
+                handleSignUp();
+            } else {
+                handleSignIn();
+            }
+        }
+
+        function handleSignIn() {
+            const email = document.getElementById("authEmail").value.trim();
             const password = document.getElementById("authPassword").value;
             
-            if (email && password) {
-                user = { email: email, name: email.split('@')[0] };
-                closeModal();
-                document.getElementById("quizRestriction").style.display = "none";
-                alert("Welcome " + user.name + "! You can now take quizzes.");
-            } else {
-                alert("Please enter email and password");
+            if (!email || !password) {
+                showAlert("Please enter email and password", "error");
+                return;
             }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showAlert("Please enter a valid email address", "error");
+                return;
+            }
+
+            // Sign in - Case insensitive email check
+            const foundUser = registeredUsers.find(u => 
+                u.email.toLowerCase() === email.toLowerCase() && 
+                u.password === password
+            );
+            
+            if (!foundUser) {
+                showAlert("Invalid email or password", "error");
+                return;
+            }
+            user = foundUser;
+            showAlert("Welcome back " + foundUser.name + "!", "success");
+
+            // Save user to localStorage
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            
+            // Update UI and close modal after delay
+            setTimeout(() => {
+                closeModal();
+                updateAuthUI();
+                loadSubjects(); // Reload subjects to show completion status
+                document.getElementById("quizRestriction").style.display = "none";
+            }, 1500);
+        }
+
+        function handleSignUp() {
+            const name = document.getElementById("authName").value.trim();
+            const email = document.getElementById("authEmail").value.trim();
+            const password = document.getElementById("authPassword").value;
+            const confirmPassword = document.getElementById("authConfirmPassword").value;
+            
+            if (!name || !email || !password || !confirmPassword) {
+                showAlert("Please fill all fields", "error");
+                return;
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showAlert("Please enter a valid email address", "error");
+                return;
+            }
+            
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                showAlert("Passwords do not match", "error");
+                return;
+            }
+            
+            // Check password length
+            if (password.length < 6) {
+                showAlert("Password must be at least 6 characters long", "error");
+                return;
+            }
+            
+            // Check if user already exists
+            const existingUser = registeredUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+            if (existingUser) {
+                showAlert("User already exists with this email. Please sign in instead.", "error");
+                return;
+            }
+            
+            // Register new user
+            const newUser = {
+                email: email.toLowerCase(),
+                password: password,
+                name: name
+            };
+            registeredUsers.push(newUser);
+            user = newUser;
+            
+            // Save to localStorage
+            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            
+            showAlert("Registration successful! Welcome " + newUser.name, "success");
+            
+            // Update UI and close modal after delay
+            setTimeout(() => {
+                closeModal();
+                updateAuthUI();
+                loadSubjects(); // Reload subjects to show completion status
+                document.getElementById("quizRestriction").style.display = "none";
+            }, 1500);
+        }
+
+        function logout() {
+            if (confirm("Are you sure you want to logout?")) {
+                user = null;
+                localStorage.removeItem('currentUser');
+                updateAuthUI();
+                loadSubjects();
+                alert("You have been logged out.");
+            }
+        }
+
+        // ==================== TIMER FUNCTIONS ====================
+        function startTimer() {
+            clearInterval(quizTimer);
+            timeLeft = 120; // 2 minutes
+            
+            const timerDisplay = document.getElementById('timerDisplay');
+            const timerContainer = document.getElementById('quizTimer');
+            
+            quizTimer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Update timer color based on remaining time
+                timerContainer.className = 'quiz-timer';
+                if (timeLeft <= 30) {
+                    timerContainer.classList.add('timer-warning');
+                }
+                if (timeLeft <= 10) {
+                    timerContainer.classList.add('timer-danger');
+                }
+                
+                // Time's up
+                if (timeLeft <= 0) {
+                    clearInterval(quizTimer);
+                    alert("Time's up! Submitting your quiz...");
+                    calculateScore();
+                    showResults();
+                }
+            }, 1000);
         }
 
         // ==================== QUIZ FUNCTIONS ====================
@@ -359,11 +725,22 @@
             currentQuestion = 0;
             userAnswers = new Array(quizzes[quizId].questions.length).fill(null);
 
-            // Show quiz section
-            document.getElementById("subjects").style.display = "none";
+            // Hide all other sections and show only quiz section
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show quiz section in full screen
             document.getElementById("quizSection").style.display = "block";
             document.getElementById("resultsSection").style.display = "none";
+            document.getElementById("reviewSection").style.display = "none";
+            
+            // Add quiz-active class to body
+            document.body.classList.add('quiz-active');
 
+            // Start timer
+            startTimer();
+            
             // Load first question
             loadQuestion();
         }
@@ -429,8 +806,17 @@
         };
 
         document.getElementById("submitBtn").onclick = function() {
+            clearInterval(quizTimer);
             calculateScore();
             showResults();
+        };
+
+        // ==================== CANCEL QUIZ FUNCTION ====================
+        document.getElementById("cancelBtn").onclick = function() {
+            if (confirm("Are you sure you want to cancel this quiz? Your progress will be lost.")) {
+                clearInterval(quizTimer);
+                goToSubjects();
+            }
         };
 
         // ==================== SCORE & RESULTS ====================
@@ -445,6 +831,41 @@
             });
 
             quizScore = correct;
+            saveProgress(quizScore, quiz.questions.length);
+        }
+
+        function saveProgress(score, total) {
+            if (!user) return;
+            
+            const percentage = Math.round((score / total) * 100);
+            const userId = user.email;
+            
+            if (!userProgress[userId]) {
+                userProgress[userId] = {};
+            }
+            
+            if (!userProgress[userId][currentQuiz]) {
+                userProgress[userId][currentQuiz] = { 
+                    score: 0, 
+                    completed: false,
+                    attempts: 0 
+                };
+            }
+            
+            // Increment attempts
+            userProgress[userId][currentQuiz].attempts = (userProgress[userId][currentQuiz].attempts || 0) + 1;
+            
+            // Update if new score is higher
+            if (percentage > userProgress[userId][currentQuiz].score) {
+                userProgress[userId][currentQuiz].score = percentage;
+                if (percentage >= 60) {
+                    userProgress[userId][currentQuiz].completed = true;
+                }
+                localStorage.setItem('userProgress', JSON.stringify(userProgress));
+            } else {
+                // Still save the attempt count even if score didn't improve
+                localStorage.setItem('userProgress', JSON.stringify(userProgress));
+            }
         }
 
         function showResults() {
@@ -468,9 +889,73 @@
 
             document.getElementById("resultMessage").textContent = message;
 
-            // Show results section
+            // Show results section in full screen
             document.getElementById("quizSection").style.display = "none";
             document.getElementById("resultsSection").style.display = "block";
+            document.getElementById("reviewSection").style.display = "none";
+            
+            // Keep quiz-active class
+            document.body.classList.add('quiz-active');
+        }
+
+        // ==================== REVIEW ANSWERS ====================
+        function reviewAnswers() {
+            const quiz = quizzes[currentQuiz];
+            
+            // Hide results, show review in full screen
+            document.getElementById("resultsSection").style.display = "none";
+            document.getElementById("reviewSection").style.display = "block";
+            
+            const reviewContainer = document.getElementById("reviewContainer");
+            reviewContainer.innerHTML = "";
+            
+            // Create review for each question
+            quiz.questions.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.answer;
+                const userAnswer = userAnswers[index];
+                
+                const reviewDiv = document.createElement("div");
+                reviewDiv.className = `review-question ${isCorrect ? 'correct' : 'wrong'}`;
+                
+                let optionsHTML = "";
+                question.options.forEach((option, optIndex) => {
+                    let optionClass = "";
+                    let marker = "";
+                    
+                    if (optIndex === question.answer) {
+                        optionClass = "correct-answer";
+                        marker = `<div class="option-marker correct-marker">✓</div>`;
+                    } else if (optIndex === userAnswer && !isCorrect) {
+                        optionClass = "user-answer";
+                        marker = `<div class="option-marker wrong-marker">✗</div>`;
+                    } else if (optIndex === userAnswer && isCorrect) {
+                        optionClass = "user-correct";
+                        marker = `<div class="option-marker correct-marker">✓</div>`;
+                    }
+                    
+                    optionsHTML += `
+                        <div class="review-option ${optionClass}">
+                            ${marker}
+                            <span>${option}</span>
+                        </div>
+                    `;
+                });
+                
+                reviewDiv.innerHTML = `
+                    <div class="review-question-header">
+                        <h3>Question ${index + 1}: ${question.q}</h3>
+                        <div class="question-status ${isCorrect ? 'status-correct' : 'status-wrong'}">
+                            ${isCorrect ? 'Correct' : 'Wrong'}
+                        </div>
+                    </div>
+                    <div class="review-options">
+                        ${optionsHTML}
+                    </div>
+                    ${!isCorrect ? `<p style="margin-top:10px; color:var(--success-green); font-weight:bold;">Correct answer: ${question.options[question.answer]}</p>` : ''}
+                `;
+                
+                reviewContainer.appendChild(reviewDiv);
+            });
         }
 
         function retakeQuiz() {
@@ -479,21 +964,46 @@
 
         // ==================== NAVIGATION ====================
         function goHome() {
-            document.getElementById("subjects").style.display = "block";
+            // Remove quiz-active class
+            document.body.classList.remove('quiz-active');
+            
+            // Hide all quiz sections
             document.getElementById("quizSection").style.display = "none";
             document.getElementById("resultsSection").style.display = "none";
-            document.getElementById("quizRestriction").style.display = "none";
+            document.getElementById("reviewSection").style.display = "none";
+            
+            // Show home and all page sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.style.display = 'block';
+            });
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function goToSubjects() {
-            document.getElementById("subjects").style.display = "block";
+            // Remove quiz-active class
+            document.body.classList.remove('quiz-active');
+            
+            // Hide all quiz sections
             document.getElementById("quizSection").style.display = "none";
             document.getElementById("resultsSection").style.display = "none";
+            document.getElementById("reviewSection").style.display = "none";
+            
+            // Show subjects and hide other page sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById("subjects").style.display = "block";
+            
+            // Reload subjects to update button text
+            loadSubjects();
             document.getElementById("subjects").scrollIntoView({ behavior: 'smooth' });
         }
 
         function scrollToSubjects() {
+            // Show subjects section
+            hideAllSections();
+            document.getElementById("subjects").style.display = "block";
             document.getElementById("subjects").scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -527,8 +1037,12 @@
             document.querySelectorAll('a[href^="#"]').forEach(link => {
                 link.onclick = function(e) {
                     e.preventDefault();
-                    const targetId = this.getAttribute("href");
-                    document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+                    const targetId = this.getAttribute("href").substring(1);
+                    
+                    if (targetId === 'home') showHome();
+                    else if (targetId === 'subjects') showSubjects();
+                    else if (targetId === 'testimonials') showTestimonials();
+                    else if (targetId === 'contact') showContact();
                     
                     // Close mobile menu if open
                     document.getElementById("navLinks").classList.remove("active");
